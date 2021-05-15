@@ -2,7 +2,7 @@ from contextlib import asynccontextmanager
 
 import asyncpg
 
-from core.settings import settings
+from userservice.core.settings import settings
 
 
 @asynccontextmanager
@@ -14,26 +14,30 @@ async def db_connect():
         await conn.close()
 
 
-async def get_user_info(login: str):
+async def get_user_info(user_id: int):
     async with db_connect() as conn:
-        return await conn.fetch(f"select * from users where login={login}")
+        return await conn.fetchrow("select * from users where id=$1", user_id)
 
 
 async def get_files_count(user_id: int):
     async with db_connect() as conn:
-        return await conn.fetch(f"select count(*) from files where user_id={user_id}")
+        return await conn.fetchrow(
+            "select count(*) from files where user_id=$1", user_id
+        )
 
 
 async def get_files_size(user_id: int):
     async with db_connect() as conn:
-        return await conn.fetch(f"select sum(size) from files where user_id={user_id}")
+        return await conn.fetchrow(
+            "select sum(size) from files where user_id=$1", user_id
+        )
 
 
 async def get_files(user_id: int):
     async with db_connect() as conn:
-        return await conn.fetch(f"select * from files where user_id={user_id}")
+        return await conn.fetch("select * from files where user_id=$1", user_id)
 
 
 async def get_file_status(file_id: int):
     async with db_connect() as conn:
-        return await conn.fetch(f"select status from files where id={file_id}")
+        return await conn.fetchrow("select status from files where id=$1", file_id)

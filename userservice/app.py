@@ -1,13 +1,12 @@
+import userservice.core.settings
+
+
 def create_app():
-    from core.settings import create_logger
-
-    create_logger()
-
     from fastapi import FastAPI
 
-    app = FastAPI(root_path="/api")
+    app = FastAPI()
 
-    from core.routes import router
+    from userservice.core.routes import router
 
     app.include_router(router)
 

@@ -1,25 +1,4 @@
-import logging
-import os
-
 from pydantic import BaseSettings, Field
-
-
-def create_logger(mode="INFO"):
-    logs = {"INFO": logging.INFO, "DEBUG": logging.DEBUG}
-
-    logger = logging.getLogger("userservice")
-    logger.setLevel(logs[mode])
-
-    handler = logging.StreamHandler()
-    handler.setLevel(logs[mode])
-
-    formatter = logging.Formatter(
-        "%(levelname)-8s  %(asctime)s    %(message)s", datefmt="%d-%m-%Y %I:%M:%S %p"
-    )
-
-    handler.setFormatter(formatter)
-
-    logger.addHandler(handler)
 
 
 class Settings(BaseSettings):

@@ -2,3 +2,4 @@ asyncpg
 uvicorn
 fastapi
 pydantic[dotenv]
+pyjwt

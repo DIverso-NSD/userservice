@@ -7,13 +7,10 @@ from userservice.core.db import (
     get_files_size,
     get_file_status,
 )
-from userservice.core.schemes import User
+from userservice.core.schemas import User
+from userservice.core.middleware import verify_token
 
 router = APIRouter()
-
-
-async def decode_token():
-    pass
 
 
 @router.get("/user")
@@ -24,7 +21,7 @@ async def get_user(user_id: int):
 
 
 @router.get("/user/files")
-async def get_user_files(user: User = Depends(decode_token)):
+async def get_user_files(user: User = Depends(verify_token)):
     db_user = await get_user_info(user.id)
     files = await get_files(db_user.id)
 
@@ -40,14 +37,14 @@ async def get_user_files(user: User = Depends(decode_token)):
 
 
 @router.get("/file/{file_id}/status")
-async def get_file_status(file_id: int, user: User = Depends(decode_token)):
+async def get_file_status(file_id: int, user: User = Depends(verify_token)):
     status = await get_file_status(file_id)
 
     return {"status": status}
 
 
 @router.get("/user/files/count")
-async def get_user_files_count(user: User = Depends(decode_token)):
+async def get_user_files_count(user: User = Depends(verify_token)):
     db_user = await get_user_info(user.id)
     count = await get_files_count(db_user.id)
 
@@ -55,7 +52,7 @@ async def get_user_files_count(user: User = Depends(decode_token)):
 
 
 @router.get("/user/files/size")
-async def get_user_files_size(user: User = Depends(decode_token)):
+async def get_user_files_size(user: User = Depends(verify_token)):
     db_user = await get_user_info(user.id)
     size = await get_files_size(db_user.id)
 

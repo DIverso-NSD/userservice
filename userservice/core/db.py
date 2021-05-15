@@ -32,3 +32,8 @@ async def get_files_size(user_id: int):
 async def get_files(user_id: int):
     async with db_connect() as conn:
         return await conn.fetch(f"select * from files where user_id={user_id}")
+
+
+async def get_file_status(file_id: int):
+    async with db_connect() as conn:
+        return await conn.fetch(f"select status from files where id={file_id}")

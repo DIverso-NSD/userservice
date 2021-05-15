@@ -38,6 +38,6 @@ async def get_files(user_id: int):
         return await conn.fetch("select * from files where user_id=$1", user_id)
 
 
-async def get_file_status(file_id: int):
+async def get_file_status(file_id: str):
     async with db_connect() as conn:
         return await conn.fetchrow("select status from files where id=$1", file_id)

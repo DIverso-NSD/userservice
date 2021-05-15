@@ -8,7 +8,6 @@ class User(BaseModel):
         ...,
         example="kuder",
     )
-    telegram: str = Field(..., example="kuderr")
 
 
 class File(BaseModel):

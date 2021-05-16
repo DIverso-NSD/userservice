@@ -17,7 +17,7 @@ router = APIRouter()
 async def get_user(user_id: int):
     db_user = await get_user_info(user_id)
 
-    return {"login": db_user.get("login"), "telegram": db_user.get("telegram")}
+    return {"login": db_user.get("login"), "telegram_name": db_user.get("telegram_name")}
 
 
 @router.get("/user/files")
